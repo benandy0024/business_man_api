@@ -9,8 +9,10 @@ from products.models import  Expense
 from.serializer import ExpenseSerialiser
 from rest_framework.views import APIView
 from rest_framework.decorators import api_view
+from django.contrib.auth import settings
 
-@api_view(['GET', 'POST'])
+User = settings.AUTH_USER_MODEL
+@api_view(['GET'])
 def expense_list(request):
     """
     List all code snippets, or create a new snippet.
@@ -19,6 +21,15 @@ def expense_list(request):
         snippets = Expense.objects.all()
         serializer = ExpenseSerialiser(snippets, many=True)
         return Response(serializer.data)
+
+class CreateExpense(generics.CreateAPIView):
+   permissions=[]
+   authentication_classes = [SessionAuthentication]
+   serializer_class = ExpenseSerialiser
+   queryset = Expense
+   def perform_create(self, serializer):
+       serializer.save(user=self.request.user)
+
 
 # class ExpenseListView(generics.ListAPIView, mixins.CreateModelMixin):
 #     serializer_class = ExpenseSerialiser

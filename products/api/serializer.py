@@ -9,4 +9,4 @@ class ExpenseSerialiser(serializers.ModelSerializer):
     total=serializers.CharField(read_only=True)
     class Meta:
         model=Expense
-        fields=['id','title','quantity','price','total']
+        fields=['user','id','title','quantity','price','total']

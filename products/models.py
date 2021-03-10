@@ -8,7 +8,7 @@ User = settings.AUTH_USER_MODEL
 
 
 class Expense(models.Model):
-    user = models.ForeignKey(User, default=1, on_delete=models.CASCADE)
+    user = models.ForeignKey(User,on_delete=models.CASCADE)
     title = models.CharField(max_length=120, blank=False)
     quantity = models.IntegerField()
     price = models.IntegerField()
